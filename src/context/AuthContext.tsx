@@ -67,7 +67,6 @@ export const AuthContextProvider = ({ children }: Props) => {
   });
 
   // todo: register state
-  const [registerError, setRegisterError] = useState<string | null>(null);
   const [isRegisterLoading, setIsRegisterLoading] = useState<boolean>(false);
   const [registerInfo, setRegisterInfo] = useState<UserInterface>({
     email: '',
@@ -142,14 +141,13 @@ export const AuthContextProvider = ({ children }: Props) => {
     async (e: React.FormEvent) => {
       e.preventDefault();
       setIsRegisterLoading(true);
-      setRegisterError('');
 
       try {
         const response = await postRequest(`${baseUrl}/register`, registerInfo);
         setIsRegisterLoading(false);
 
         if (response.error) {
-          setRegisterError(response.error || 'Something went wrong');
+          console.log({ error: response?.message });
         } else {
           setUser(response);
           localStorage.setItem('User', JSON.stringify(response));
@@ -161,11 +159,9 @@ export const AuthContextProvider = ({ children }: Props) => {
           }));
           navigate('/');
         }
-      } catch (error) {
+      } catch (error: any) {
         setIsRegisterLoading(false);
-        setRegisterError(
-          'An error occurred while registering. Please try again.'
-        );
+        console.log({ error: error?.message });
       }
     },
     [registerInfo, navigate]
