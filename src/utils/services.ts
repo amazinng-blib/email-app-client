@@ -1,6 +1,6 @@
 // Define a type for the request body
 type RequestBody = Record<string, any>;
-export const baseUrl = 'http://localhost:4000/api/v1';
+export const baseUrl = 'https://email-app-server.vercel.app/api/v1';
 
 export const postRequest = async (
   url: string,
