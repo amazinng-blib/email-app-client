@@ -41,6 +41,7 @@ export const AuthContext = createContext<{
   updateRegisterInfo: (info: UserInterface) => void;
   registerUser: (e: React.FormEvent) => Promise<void>;
   isRegisterLoading: boolean;
+  registerError: string;
   registerInfo: UserInterface;
   userReceivedMessages: UserReceivedMessagesInterface[];
   updateMessageDetails: (details: MessageInterface) => void;
@@ -74,6 +75,7 @@ export const AuthContextProvider = ({ children }: Props) => {
     lastName: '',
     password: '',
   });
+  const [registerError, setRegisterError] = useState('');
 
   // todo:  message state
   const [userReceivedMessages, setUserReceivedUserMessages] = useState<
@@ -145,9 +147,8 @@ export const AuthContextProvider = ({ children }: Props) => {
       try {
         const response = await postRequest(`${baseUrl}/register`, registerInfo);
         setIsRegisterLoading(false);
-
         if (response.error) {
-          console.log({ error: response?.message });
+          setRegisterError(response?.message);
         } else {
           setUser(response);
           localStorage.setItem('User', JSON.stringify(response));
@@ -161,7 +162,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         }
       } catch (error: any) {
         setIsRegisterLoading(false);
-        console.log({ error: error?.message });
+        setRegisterError(error?.message);
       }
     },
     [registerInfo, navigate]
@@ -192,7 +193,6 @@ export const AuthContextProvider = ({ children }: Props) => {
     setEmailSendingMessage('');
     setSendingEmailLoading(true);
     setEmailSendingSuccess(false);
-    console.log('Sending email...');
 
     try {
       const response = await postRequest(
@@ -268,6 +268,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         readMessage,
         emailSendingError,
         emailSendingMessage,
+        registerError,
       }}
     >
       {children}

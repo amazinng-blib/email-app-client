@@ -12,8 +12,13 @@ export interface UserInterface {
 }
 
 const Register = () => {
-  const { isRegisterLoading, registerUser, updateRegisterInfo, registerInfo } =
-    useContext(AuthContext) || {};
+  const {
+    isRegisterLoading,
+    registerUser,
+    updateRegisterInfo,
+    registerInfo,
+    registerError,
+  } = useContext(AuthContext) || {};
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -29,6 +34,13 @@ const Register = () => {
               Sign up
             </h2>
             <form className="w-full  " onSubmit={registerUser}>
+              {registerError && (
+                <div className="my-6">
+                  <p className="text-center text-[.9rem] text-[#b86363]">
+                    {registerError}
+                  </p>
+                </div>
+              )}
               <div className="w-full mb-2">
                 <label htmlFor="firstName" className="mb-2 font-semibold">
                   First Name
