@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { FaRegEyeSlash } from 'react-icons/fa';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import Button from './components/Button';

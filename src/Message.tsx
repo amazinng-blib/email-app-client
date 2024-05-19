@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import { truncate } from 'lodash';
 import Button from './components/Button';
 import { useNavigate } from 'react-router-dom';
