@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from './context/AuthContext';
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const {
     userReceivedMessages,
     totalUnReadMessages,
@@ -21,7 +23,10 @@ const Home = () => {
     }
   }, [userReceivedMessages]);
 
-  const navigate = useNavigate();
+  if (!localStorage.getItem('user')) {
+    // Redirect the user to the registration page
+    return (window.location.href = '/register');
+  }
   return (
     <div className="bg-[#babac0]">
       <div className="w-full max-w-[660px] m-auto border flex items-center justify-center flex-col min-h-screen bg-[grey] px-4">

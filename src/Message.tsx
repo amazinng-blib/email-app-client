@@ -17,6 +17,11 @@ const Message: FC = () => {
     setCollapseIndex(index === collapseIndex ? null : index);
   };
 
+  if (!localStorage.getItem('user')) {
+    // Redirect the user to the registration page
+    return (window.location.href = '/register');
+  }
+
   return (
     <div className="bg-[#babac0] min-h-screen">
       <div className="w-full max-w-[900px] m-auto border bg-[#312e2e] text-[#fff] min-h-screen px-8 py-12">
