@@ -36,7 +36,7 @@ const Register = () => {
             <form className="w-full  " onSubmit={registerUser}>
               {registerError && (
                 <div className="my-6">
-                  <p className="text-center text-[.9rem] text-[#b86363]">
+                  <p className="text-center text-[.9rem] text-[#fff]">
                     {registerError}
                   </p>
                 </div>
