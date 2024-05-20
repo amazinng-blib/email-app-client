@@ -49,7 +49,7 @@ export const AuthContext = createContext<{
   emailSendingMessage: string;
   emailSendingError: string;
   updateClickedMessage: (mailId: string) => void | undefined;
-  readMessage: () => void;
+  readMessage: (mail_id: string) => void;
   emailSendingSuccess: boolean;
   sendingEmailLoading: boolean;
   user: UserInStorageType | null;
@@ -149,6 +149,9 @@ export const AuthContextProvider = ({ children }: Props) => {
         setIsRegisterLoading(false);
         if (response.error) {
           setRegisterError(response?.message);
+          setTimeout(() => {
+            setRegisterError('');
+          }, 5000);
         } else {
           setUser(response);
           localStorage.setItem('User', JSON.stringify(response));
@@ -163,6 +166,9 @@ export const AuthContextProvider = ({ children }: Props) => {
       } catch (error: any) {
         setIsRegisterLoading(false);
         setRegisterError(error?.message);
+        setTimeout(() => {
+          setRegisterError('');
+        }, 5000);
       }
     },
     [registerInfo, navigate]
@@ -231,12 +237,15 @@ export const AuthContextProvider = ({ children }: Props) => {
 
   // todo: toggle isRead to true
 
-  const readMessage = async () => {
+  const readMessage = async (mail_id: string) => {
+    const mailId = {
+      mailId: mail_id,
+    };
     try {
       const response = await putRequest(
         `${baseUrl}/read-mail`,
         user?.userDetails?.token,
-        clickedMessage
+        mailId
       );
 
       if (response.message === 'Success') {

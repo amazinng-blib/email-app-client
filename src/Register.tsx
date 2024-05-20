@@ -23,14 +23,14 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="bg-[#babac0]">
-      <div className="w-full max-w-[660px] m-auto border flex items-center justify-center flex-col min-h-screen bg-[grey] px-4">
+    <div className="bg-blue-100">
+      <div className="w-full max-w-[660px] m-auto border flex items-center justify-center flex-col min-h-screen bg-blue-400 px-4">
         <div className="max-w-md m-auto w-full space-y-8">
           <div>
-            <h2 className="text-center text-3xl font-bold text-[#f3f5f3] mb-6">
+            <h2 className="text-center text-3xl font-bold text-[#fff] mb-6">
               Email App
             </h2>
-            <h2 className="text-center text-2xl font-bold text-[#f3f5f3]">
+            <h2 className="text-center text-2xl font-bold text-[#fff]">
               Sign up
             </h2>
             <form className="w-full  " onSubmit={registerUser}>
@@ -41,7 +41,7 @@ const Register = () => {
                   </p>
                 </div>
               )}
-              <div className="w-full mb-2">
+              <div className="w-full mb-4">
                 <label htmlFor="firstName" className="mb-2 font-semibold">
                   First Name
                 </label>
@@ -62,11 +62,11 @@ const Register = () => {
                       })
                     }
                     placeholder="Enter First Name"
-                    className="border-2 w-full  px-4 py-2 rounded-md bg-[#909090] text-[#000] cursor-[red] "
+                    className="border-2 w-full  px-4 py-2 rounded-md  cursor-[red] "
                   />
                 </div>
               </div>
-              <div className="w-full mb-2">
+              <div className="w-full mb-4">
                 <label htmlFor="lastName" className="mb-2 font-semibold">
                   Last Name
                 </label>
@@ -87,11 +87,11 @@ const Register = () => {
                       })
                     }
                     placeholder="Enter First Name"
-                    className="border-2 w-full px-4 py-2 rounded-md bg-[#909090] text-[#000]"
+                    className="border-2 w-full px-4 py-2 rounded-md "
                   />
                 </div>
               </div>
-              <div className="w-full mb-2">
+              <div className="w-full mb-4">
                 <label htmlFor="email" className="mb-2 font-semibold">
                   Email
                 </label>
@@ -112,12 +112,12 @@ const Register = () => {
                       })
                     }
                     placeholder="Enter First Name"
-                    className="border-2 w-full  px-4 py-2 rounded-md bg-[#909090] text-[#000]"
+                    className="border-2 w-full  px-4 py-2 rounded-md "
                   />
                 </div>
               </div>
 
-              <div className=" mb-2">
+              <div className=" mb-4">
                 <label htmlFor="password" className="mb-2 font-semibold">
                   Password
                 </label>
@@ -137,7 +137,7 @@ const Register = () => {
                         password: e.target.value,
                       })
                     }
-                    className="border-2 w-full  px-4 py-2 rounded-md bg-[#909090] text-[#000]"
+                    className="border-2 w-full  px-4 py-2 rounded-md "
                   />
                   <div className="absolute inset-y-0 right-0 flex items-center">
                     {showPassword ? (
@@ -156,7 +156,17 @@ const Register = () => {
               </div>
 
               <div className="text-center my-4">
-                <Button type="submit" isLoading={isRegisterLoading}>
+                <Button
+                  type="submit"
+                  isLoading={isRegisterLoading}
+                  className="text-black"
+                  disabled={
+                    !registerInfo?.lastName ||
+                    !registerInfo?.firstName ||
+                    !registerInfo?.email ||
+                    !registerInfo?.password
+                  }
+                >
                   Submit
                 </Button>
               </div>

@@ -24,20 +24,28 @@ const Home = () => {
   }, [userReceivedMessages]);
 
   return (
-    <div className="bg-[#babac0]">
-      <div className="w-full max-w-[660px] m-auto border flex items-center justify-center flex-col min-h-screen bg-[grey] px-4">
-        <h2 className="my-8 font-bold text-[1.5rem] lg:text-[2rem] capitalize">
+    <div className="">
+      <div className="w-full max-w-[660px] m-auto border flex items-center justify-center flex-col min-h-screen bg-blue-200 px-4">
+        <h2 className=" font-bold text-[1.5rem] lg:text-[2rem] capitalize">
           {user?.userDetails?.user?.first_name}{' '}
           {user?.userDetails?.user?.last_name}
         </h2>
 
-        <p className="my-6 font-semibold text-[#e6e0e0]">
+        <p className="my-6 font-semibold ">
           You have {unReadMessageCount} unread messages out of {totalMessages}{' '}
           total
         </p>
-        <div>
+        <div className="flex gap-4 mt-6">
           <Button variant="primary" onClick={() => navigate('/messages')}>
             View
+          </Button>
+          <Button
+            className="border border-blue-800 text-blue-600"
+            onClick={() =>
+              navigate(`/messages/${user?.userDetails?.user?._id}`)
+            }
+          >
+            Compose
           </Button>
         </div>
       </div>

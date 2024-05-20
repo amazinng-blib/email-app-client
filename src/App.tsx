@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Register from './Register';
 import Home from './Home';
 import Message from './Message';
+import MessageDetailScreen from './Message-Detail-Screen';
 
 export type UserInStorageType = {
   message: string;
@@ -52,6 +53,16 @@ const App = () => {
         path="/messages"
         element={
           !userFromStorage?.userDetails?.token ? <Register /> : <Message />
+        }
+      />
+      <Route
+        path="/messages/:id"
+        element={
+          !userFromStorage?.userDetails?.token ? (
+            <Register />
+          ) : (
+            <MessageDetailScreen />
+          )
         }
       />
     </Routes>

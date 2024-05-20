@@ -8,6 +8,7 @@ interface ButtonProps {
   type?: 'submit' | 'button';
   className?: string;
   isLoading?: boolean;
+  disabled?: boolean; // Added disabled prop
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -17,6 +18,7 @@ const Button: React.FC<ButtonProps> = ({
   type,
   className,
   isLoading,
+  disabled, // Added disabled prop
 }) => {
   const getColor = () => {
     switch (variant) {
@@ -36,8 +38,9 @@ const Button: React.FC<ButtonProps> = ({
         backgroundColor: `${!variant ? '' : getColor()}`,
         border: `2px solid ${getColor()}`,
       }}
-      onClick={onClick}
-      className={`rounded-[50px] px-12 py-2 focus:outline-none text-[#fff] ${className} flex  justify-center items-center m-auto `}
+      onClick={!isLoading ? onClick : undefined}
+      className={`rounded-[50px] px-12 py-2 focus:outline-none text-[#fff] ${className} flex justify-center items-center m-auto `}
+      disabled={disabled || isLoading}
     >
       {children}
       {isLoading && <FaCircleNotch className="ml-3 animate-spin" />}
