@@ -48,7 +48,6 @@ export const AuthContext = createContext<{
   sendEmail: (e: React.FormEvent) => Promise<void>;
   emailSendingMessage: string;
   emailSendingError: string;
-  updateClickedMessage: (mailId: string) => void | undefined;
   readMessage: (mail_id: string) => void;
   emailSendingSuccess: boolean;
   sendingEmailLoading: boolean;
@@ -103,10 +102,6 @@ export const AuthContextProvider = ({ children }: Props) => {
   const [emailSendingSuccess, setEmailSendingSuccess] =
     useState<boolean>(false);
 
-  const [clickedMessage, setClickedMessage] = useState({
-    mailId: '',
-  });
-
   //todo: Update register info function
   const updateRegisterInfo = useCallback((info: UserInterface) => {
     setRegisterInfo(info);
@@ -115,13 +110,6 @@ export const AuthContextProvider = ({ children }: Props) => {
   // todo: update message function
   const updateMessageDetails = useCallback((details: MessageInterface) => {
     setMessageDetails(details);
-  }, []);
-
-  // todo: update clicked message function
-  const updateClickedMessage = useCallback((mailId: string) => {
-    setClickedMessage({
-      mailId,
-    });
   }, []);
 
   // todo: total user unread Message function
@@ -273,7 +261,6 @@ export const AuthContextProvider = ({ children }: Props) => {
         messageDetails,
         totalUnReadMessages,
         unReadMessageCount,
-        updateClickedMessage,
         readMessage,
         emailSendingError,
         emailSendingMessage,

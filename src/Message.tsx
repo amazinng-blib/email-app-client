@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useContext } from 'react';
 import { truncate } from 'lodash';
 
 import { useNavigate } from 'react-router-dom';

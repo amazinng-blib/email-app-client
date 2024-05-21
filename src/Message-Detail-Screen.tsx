@@ -6,7 +6,7 @@ import {
   AuthContext,
   UserReceivedMessagesInterface,
 } from './context/AuthContext';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { truncate } from 'lodash';
 
 const MessageDetailScreen = () => {
