@@ -4,6 +4,7 @@ import Register from './Register';
 import Home from './Home';
 import Message from './Message';
 import MessageDetailScreen from './Message-Detail-Screen';
+import Login from './Login';
 
 export type UserInStorageType = {
   message: string;
@@ -27,8 +28,8 @@ const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const userFromStorage: UserInStorageType =
-    localStorage.getItem('User') &&
-    JSON.parse(localStorage.getItem('User') || '');
+    localStorage.getItem('Email-User') &&
+    JSON.parse(localStorage.getItem('Email-User') || '');
 
   useEffect(() => {
     //todo: If on the register page and token exists, redirect to home
@@ -45,10 +46,8 @@ const App = () => {
         path="/"
         element={!userFromStorage?.userDetails?.token ? <Register /> : <Home />}
       />
-      <Route
-        path="/register"
-        element={!userFromStorage?.userDetails?.token ? <Register /> : <Home />}
-      />
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
       <Route
         path="/messages"
         element={

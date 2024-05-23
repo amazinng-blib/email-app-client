@@ -1,5 +1,4 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
-import { UserInterface } from '../Register';
 import { useNavigate } from 'react-router-dom';
 import {
   baseUrl,
@@ -11,6 +10,18 @@ import { UserInStorageType } from '../App';
 type Props = {
   children: React.ReactNode;
 };
+
+export interface UserInterface {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
+interface LoginInterface {
+  email: string;
+  password: string;
+}
 
 export interface MessageInterface {
   sender_email: string;
@@ -37,12 +48,18 @@ export interface UserReceivedMessagesInterface {
   isRead: boolean;
 }
 
+// context global object
 export const AuthContext = createContext<{
   updateRegisterInfo: (info: UserInterface) => void;
   registerUser: (e: React.FormEvent) => Promise<void>;
   isRegisterLoading: boolean;
   registerError: string;
   registerInfo: UserInterface;
+  login: LoginInterface;
+  loginUser: (e: React.FormEvent) => void;
+  setLogin: (info: LoginInterface) => void;
+  isLoginLoading: boolean;
+  loginError: string;
   userReceivedMessages: UserReceivedMessagesInterface[];
   updateMessageDetails: (details: MessageInterface) => void;
   sendEmail: (e: React.FormEvent) => Promise<void>;
@@ -75,6 +92,17 @@ export const AuthContextProvider = ({ children }: Props) => {
     password: '',
   });
   const [registerError, setRegisterError] = useState('');
+
+  // todo: Login state
+
+  const [login, setLogin] = useState<LoginInterface>({
+    email: '',
+    password: '',
+  });
+
+  const [isLoginLoading, setIsLoginLoading] = useState<boolean>(false);
+
+  const [loginError, setLoginError] = useState('');
 
   // todo:  message state
   const [userReceivedMessages, setUserReceivedUserMessages] = useState<
@@ -141,15 +169,7 @@ export const AuthContextProvider = ({ children }: Props) => {
             setRegisterError('');
           }, 5000);
         } else {
-          setUser(response);
-          localStorage.setItem('User', JSON.stringify(response));
-          setMessageDetails((prev) => ({
-            ...prev,
-            sender_email: response
-              ? response?.userDetails?.user?.email
-              : JSON.parse(localStorage.getItem('User') || ''),
-          }));
-          navigate('/');
+          navigate('/login');
         }
       } catch (error: any) {
         setIsRegisterLoading(false);
@@ -160,6 +180,42 @@ export const AuthContextProvider = ({ children }: Props) => {
       }
     },
     [registerInfo, navigate]
+  );
+
+  // todo: register User function
+  const loginUser = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      setIsLoginLoading(true);
+
+      try {
+        const response = await postRequest(`${baseUrl}/login`, login);
+        setIsLoginLoading(false);
+        if (response.error) {
+          setLoginError(response?.message);
+          setTimeout(() => {
+            setLoginError('');
+          }, 5000);
+        } else {
+          setUser(response);
+          localStorage.setItem('Email-User', JSON.stringify(response));
+          setMessageDetails((prev) => ({
+            ...prev,
+            sender_email: response
+              ? response?.userDetails?.user?.email
+              : JSON.parse(localStorage.getItem('Email-User') || ''),
+          }));
+          navigate('/');
+        }
+      } catch (error: any) {
+        setIsLoginLoading(false);
+        setLoginError(error?.message);
+        setTimeout(() => {
+          setLoginError('');
+        }, 5000);
+      }
+    },
+    [login, navigate]
   );
 
   // todo: Get user messages function
@@ -265,6 +321,11 @@ export const AuthContextProvider = ({ children }: Props) => {
         emailSendingError,
         emailSendingMessage,
         registerError,
+        login,
+        loginError,
+        setLogin,
+        isLoginLoading,
+        loginUser,
       }}
     >
       {children}

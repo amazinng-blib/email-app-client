@@ -14,8 +14,10 @@ const MessageDetailScreen = () => {
   const location = useLocation();
   const pathname = location.pathname;
   const id = pathname.split('/')[2];
+
   const { userReceivedMessages } = useContext(AuthContext) || {};
   const [collapseMessage, setCollapseMessage] = useState<boolean>(false);
+
   return (
     <div className="w-full max-w-[900px] m-auto border bg-blue-500 text-[#fff] min-h-screen px-8 py-12">
       <div className="ml-auto cursor-pointer my-8">
